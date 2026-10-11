@@ -77,8 +77,12 @@ Picked from `tools.md`. Items marked `*` are not on that list.
 | Cypress                                   | End-to-end tests (`cypress.config.ts`)                                                                                                                    |
 | Gherkin                                   | BDD scenarios from the user's point of view (`.feature`, Given/When/Then), run in Cypress                                                                 |
 | `@badeball/cypress-cucumber-preprocessor` | Runs Gherkin scenarios (`.feature`) in Cypress, maps steps to TS definitions                                                                              |
+| Playwright (`@playwright/test`) `*`       | An alternative to Cypress, your choice: end-to-end tests (`playwright.config.ts`), faster, starts the server itself                                       |
+| `playwright-bdd` `*`                      | Turns Gherkin scenarios (`tests/e2e/features/*.feature`) into Playwright tests, steps in `tests/e2e/steps/`                                               |
 | Stryker (`@stryker-mutator/core`)         | Mutation testing: deliberately breaks the code and checks that tests catch it (mutation score instead of plain coverage)                                  |
 | Stryker command runner (built into core)  | Runs `vitest run` for every mutant. `@stryker-mutator/vitest-runner` is faster but does not work with Vitest 5 (stryker-js #6210); switch back once fixed |
+
+**E2E: Cypress or Playwright, your choice.** Both run the same Gherkin scenarios. Cypress: `cypress/e2e/*.feature`, `npm run test:e2e`. Playwright: `tests/e2e/features/*.feature`, `npm run test:e2e:playwright` (install the browser with `npx playwright install chromium`). Pick one and remove the other with its dependencies. Playwright example: `tests/e2e/features/greeting.feature` starts the CLI app as a process, without a browser.
 
 ## Git and CI
 
@@ -125,6 +129,7 @@ Picked from `tools.md`. Items marked `*` are not on that list.
 | `test:coverage`                                      | `vitest run --coverage`                                                                                      |
 | `test:mutation`                                      | `stryker run`                                                                                                |
 | `test:e2e` / `test:e2e:open`                         | `cypress run` / `cypress open`                                                                               |
+| `test:e2e:playwright` / `test:e2e:playwright:open`   | `bddgen` + `playwright test` / with `--ui`                                                                   |
 | `commitlint`                                         | `commitlint --edit` (`commit-msg` hook)                                                                      |
 | `check:adrs`                                         | archgate check                                                                                               |
 | `docs:api`                                           | TypeDoc                                                                                                      |

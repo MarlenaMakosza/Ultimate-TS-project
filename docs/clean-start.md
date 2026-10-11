@@ -77,8 +77,12 @@ Wybrany z `tools.md`. Pozycje oznaczone `*` są spoza tej listy.
 | Cypress | Testy end-to-end (`cypress.config.ts`) |
 | Gherkin | Scenariusze BDD z perspektywy użytkownika (`.feature`, Given/When/Then), uruchamiane w Cypress |
 | `@badeball/cypress-cucumber-preprocessor` | Uruchamia scenariusze Gherkin (`.feature`) w Cypress, mapuje kroki na definicje w TS |
+| Playwright (`@playwright/test`) `*` | Alternatywa dla Cypress do wyboru: testy end-to-end (`playwright.config.ts`), szybsze, sam uruchamia serwer |
+| `playwright-bdd` `*` | Zamienia scenariusze Gherkin (`tests/e2e/features/*.feature`) w testy Playwright, kroki w `tests/e2e/steps/` |
 | Stryker (`@stryker-mutator/core`) | Mutation testing: celowo psuje kod i sprawdza, czy testy to wykryją (mutation score zamiast samego coverage) |
 | Stryker command runner (wbudowany w core) | Odpala `vitest run` dla każdego mutanta. `@stryker-mutator/vitest-runner` jest szybszy, ale nie działa z Vitest 5 (stryker-js #6210); wróć do niego po poprawce |
+
+**E2E: Cypress albo Playwright, do wyboru.** Oba uruchamiają te same scenariusze Gherkin. Cypress: `cypress/e2e/*.feature`, `npm run test:e2e`. Playwright: `tests/e2e/features/*.feature`, `npm run test:e2e:playwright` (przeglądarkę instaluje `npx playwright install chromium`). Wybierz jedno i usuń drugie razem z jego zależnościami. Przykład dla Playwright: `tests/e2e/features/greeting.feature` uruchamia aplikację CLI jako proces, bez przeglądarki.
 
 ## Git i CI
 
@@ -125,6 +129,7 @@ Wybrany z `tools.md`. Pozycje oznaczone `*` są spoza tej listy.
 | `test:coverage` | `vitest run --coverage` |
 | `test:mutation` | `stryker run` |
 | `test:e2e` / `test:e2e:open` | `cypress run` / `cypress open` |
+| `test:e2e:playwright` / `test:e2e:playwright:open` | `bddgen` + `playwright test` / z `--ui` |
 | `commitlint` | `commitlint --edit` (hook `commit-msg`) |
 | `check:adrs` | archgate check |
 | `docs:api` | TypeDoc |

@@ -34,3 +34,8 @@ Thumbs.db
 cypress/screenshots
 cypress/videos
 cypress/downloads
+
+# Playwright
+test-results
+playwright-report
+.features-gen

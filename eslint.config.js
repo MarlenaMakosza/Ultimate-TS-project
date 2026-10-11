@@ -75,6 +75,9 @@ export default [
   {
     ignores: [
       'node_modules/**',
+      'test-results/**',
+      'playwright-report/**',
+      '.features-gen/**',
       'dist/**',
       'coverage/**',
       'reports/**',
@@ -780,6 +783,8 @@ export default [
   {
     name: 'Tests',
     files: ['tests/**/*.ts', 'src/**/*.{test,spec}.ts'],
+    // Playwright scenarios have their own block below: Vitest rules do not apply to them.
+    ignores: ['tests/e2e/**'],
     plugins: {
       vitest: vitest,
     },
@@ -843,6 +848,20 @@ export default [
         'vitest/valid-title': ['error', { ignoreTypeOfDescribeName: true }],
         'vitest/valid-expect-in-promise': 'error',
       }),
+    },
+  },
+  {
+    name: 'E2E (Playwright + Gherkin)',
+    files: ['tests/e2e/**/*.ts'],
+    rules: {
+      // Assertions compare against literal expected values, same as in unit tests
+      '@typescript-eslint/no-magic-numbers': 'off',
+      // Cucumber step functions are capitalized by convention, they are not constructors
+      'new-cap': ['error', { capIsNewExceptions: ['Given', 'When', 'Then', 'Before', 'After'] }],
+      // Playwright fixtures must destructure their first argument, even when they use no fixture
+      'no-empty-pattern': ['error', { allowObjectPatternsAsParameters: true }],
+      // Steps run the CLI once and wait for it; there is no event loop work to block
+      'node/no-sync': 'off',
     },
   },
   {
